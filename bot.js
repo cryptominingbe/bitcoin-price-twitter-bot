@@ -4,34 +4,32 @@ const fetch = require('node-fetch');
 
 // Write the Env variables on Heroku or your server, to keep them save from Github
 var Bot = new TwitterBot({
-  consumer_key: process.env.BOT_CONSUMER_KEY,
-  consumer_secret: process.env.BOT_CONSUMER_SECRET,
-  access_token: process.env.BOT_ACCESS_TOKEN,
-  access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
+        consumer_key: 'HoLOf2E80xQd9VjBSAsdnjlwe',
+        consumer_secret: '18Q5l361yHMVryutoJ7Oaup0lc3MObWwEHOzvWjTygtbupCkbm',
+        access_token: '1285958645830889479-uxjJAhTuy1BJnWzzw1fS5G9BrHZhjG',
+        access_token_secret: 'ik6Y1bXeTXd2fRj9yW5KQKvG2sZ4Nmc15OZr4S2Y7Ru9c'
 });
 
 // Function that builds and tweets the message
 function runBot() {
-  fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+        fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=de1d97bb-6f29-44ae-97db-8d7e1a81dc95&convert=eur')
     .then(resp => resp.json())
-    .then(text => text[0])
+    .then(text => text.data)
     .then(
-      info => `Bitcoin Price: $${info.price_usd} [USD]
-1hr - change: ${info.percent_change_1h > 0
-        ? info.percent_change_1h + '% 📈'
-        : info.percent_change_1h + '% 📉'}
-1day - trend: ${info.percent_change_24h > 0
-        ? info.percent_change_24h + '% 📈'
-        : info.percent_change_24h + '% 📉'}
-1week - trend: ${info.percent_change_7d > 0
-        ? info.percent_change_7d + '% 📈'
-        : info.percent_change_7d + '% 📉'}
-Remaining Supply: ${(100 - info.total_supply / info.max_supply * 100).toFixed(
-        3
-      )}%
-#bitcoin`
+            currencies => {
+                    for( let i = 0; i < currencies.length; i++ ) {
+                        // Get currency
+                        let currency = currencies[i]
+
+                        // Filter currencies
+                            if (currency.slug == 'bitcoin' || currency.slug == 'ethereum' || currency.slug == 'omg' || currency.slug == 'synthetix-network-token' ) {
+                                // Send Tweet
+                                Bot.tweet(`${currency.name} Price: €${currency.quote.EUR.price.toFixed(2)} [EUR]
+#${currency.slug}`)
+                        }
+                    }
+            }
     )
-    .then(bitcoin => Bot.tweet(bitcoin))
     //.then(bitcoin => console.log(bitcoin)) // debugging purposes
     .catch(error => console.log('Error ', error));
 }
