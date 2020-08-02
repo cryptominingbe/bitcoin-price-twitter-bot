@@ -13,7 +13,7 @@ var Bot = new TwitterBot({
 // Function that builds and tweets the message
 function runBot() {
         // Send Tweet
-        Bot.tweet(`Mine free Bitcoins everyday!  #BTCmining #bitcoinmining #free #Bitcoin ... http://crypto-mining.be`)
+        Bot.tweet(`Mine free Bitcoins everyday! #BTCmining #bitcoinmining #free #Bitcoin ... http://crypto-mining.be`)
 }
 
 // run Bot

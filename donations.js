@@ -13,7 +13,7 @@ var Bot = new TwitterBot({
 // Function that builds and tweets the message
 function runBot() {
         // Send Tweet
-        Bot.tweet(`Bitcoin donations: 3EjCzHqKr3hQYCbPoFTHLLAGfWgQTmk6oY`)
+        Bot.tweet(`Bitcoin donations: 3K1E6MCoyyLkkXzYjpfMrDhrTnTqv4ywxX`)
 }
 
 // run Bot
